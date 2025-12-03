@@ -4,7 +4,7 @@
 ![Stack](https://img.shields.io/badge/FastAPI-Tailwind-blue?style=flat-square)
 ![AI](https://img.shields.io/badge/Powered%20By-Gemini%202.0-orange?style=flat-square)
 
-**NexPlan AI** is an intelligent task orchestration system that transforms vague user goals into structured, timeline-based execution plans. Unlike simple to-do lists, NexPlan uses **LLM Reasoning (Google Gemini 2.0)** to understand context, estimate duration, and logically sequence dependencies.
+**Smart_Task_Planne** is an intelligent task orchestration system that transforms vague user goals into structured, timeline-based execution plans. Unlike simple to-do lists, NexPlan uses **LLM Reasoning (Google Gemini 2.0)** to understand context, estimate duration, and logically sequence dependencies.
 
 ---
 
