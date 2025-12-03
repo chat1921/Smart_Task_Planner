@@ -98,5 +98,5 @@ Smart_Task_Planner/
 
 ---
 
-## Installationa & Demo Video :
+## Installation & Demo Video :
 
