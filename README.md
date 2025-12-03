@@ -24,3 +24,27 @@ NexPlan AI is an intelligent task orchestration system that transforms vague use
    ```bash
    git clone [httpsgithub.comYOUR_USERNAMEnexplan-ai.git](httpsgithub.comYOUR_USERNAMEnexplan-ai.git)
    cd nexplan-ai
+
+2. Set up Virtual Environment
+
+
+python -m venv venv
+# Windows
+venv\Scripts\activate
+# Mac/Linux
+source venv/bin/activate
+
+3. Install Dependencies
+
+pip install -r requirements.txt
+
+
+4. Configure Environment Create a .env file in the root directory:
+
+GEMINI_API_KEY=your_api_key_here
+
+5. Run the Application
+
+uvicorn app.main:app --reload
+
+Visit http://127.0.0.1:8000 to start planning.
