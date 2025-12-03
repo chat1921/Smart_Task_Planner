@@ -1,5 +1,3 @@
-Markdown
-
 # 🚀 NexPlan AI - Advanced Goal Architect
 
 ![Status](https://img.shields.io/badge/Status-Completed-success?style=flat-square)
@@ -41,47 +39,61 @@ Open your terminal and run:
 ```bash
 git clone [https://github.com/chat1921/Smart_Task_Planner.git](https://github.com/chat1921/Smart_Task_Planner.git)
 cd Smart_Task_Planner
+```
 
-2. Set up Virtual Environment
-
+### 2. Set up Virtual Environment
 It is recommended to use a virtual environment to keep dependencies clean.
 
-    Windows:
-
-Bash
-
+* **Windows:**
+```bash
 python -m venv venv
 venv\Scripts\activate
+```
 
-    Mac / Linux:
-
-Bash
-
+* **Mac / Linux:**
+```bash
 python3 -m venv venv
 source venv/bin/activate
+```
 
-3. Install Dependencies
-Bash
-
+### 3. Install Dependencies
+```bash
 pip install -r requirements.txt
+```
 
-4. Configure Environment Variables
-
-    Create a file named .env in the root folder.
-
-    Open it and add your Google Gemini API Key:
-
-Code snippet
-
+### 4. Configure Environment Variables
+1. Create a file named `.env` in the root folder.
+2. Open it and add your Google Gemini API Key:
+```env
 GEMINI_API_KEY=your_actual_api_key_here
+```
 
-5. Run the Application
-
+### 5. Run the Application
 Start the backend server:
-Bash
-
+```bash
 uvicorn app.main:app --reload
+```
 
-6. Access the App
+### 6. Access the App
+Open your browser and visit:
+**http://127.0.0.1:8000**
 
-Open your browser and visit: http://127.0.0.1:8000
+---
+
+## 📂 Project Structure
+
+```text
+Smart_Task_Planner/
+├── app/
+│   ├── main.py          # FastAPI Server & Routes
+│   ├── api.py           # AI Logic (Gemini Integration)
+│   ├── database.py      # SQLite Database Manager
+│   └── templates/
+│       └── index.html   # Advanced Dashboard UI
+├── requirements.txt     # Python Dependencies
+├── .env                 # API Keys (Excluded from Git)
+└── README.md            # Documentation
+```
+
+---
+
