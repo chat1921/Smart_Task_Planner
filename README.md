@@ -38,7 +38,7 @@ Follow these steps to run the project locally.
 ### 1. Clone the Repository
 Open your terminal and run:
 ```bash
-git clone [https://github.com/YOUR_USERNAME/Smart_Task_Planner.git](https://github.com/YOUR_USERNAME/Smart_Task_Planner.git)
+git clone [git clone https://github.com/chat1921/Smart_Task_Planner.git](https://github.com/YOUR_USERNAME/Smart_Task_Planner.git)
 cd Smart_Task_Planner
 
 2. Set up Virtual Environment
