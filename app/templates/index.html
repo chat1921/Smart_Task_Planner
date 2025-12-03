@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexPlan AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    animation: { 'fade-in-up': 'fadeInUp 0.5s ease-out forwards' },
+                    keyframes: { fadeInUp: { '0%': { opacity: '0', transform: 'translateY(10px)' }, '100%': { opacity: '1', transform: 'translateY(0)' } } }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { background-color: #030712; background-image: radial-gradient(circle at 50% 0%, #1e1b4b 0%, #030712 50%); }
+        .glass { background: rgba(17, 24, 39, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .glass-card { background: linear-gradient(145deg, rgba(31, 41, 55, 0.6) 0%, rgba(17, 24, 39, 0.8) 100%); border: 1px solid rgba(255, 255, 255, 0.05); }
+        .glow-text { text-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #374151; border-radius: 10px; }
+    </style>
+</head>
+<body class="text-slate-300 h-screen flex overflow-hidden selection:bg-indigo-500/30">
+
+    <aside class="w-72 glass border-r-0 border-r-white/5 flex flex-col hidden md:flex z-20">
+        <div class="p-8 pb-4">
+            <div class="flex items-center gap-3 text-white mb-6">
+                <div class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
+                    <i class="fa-solid fa-layer-group text-sm"></i>
+                </div>
+                <span class="font-bold text-lg tracking-tight">NexPlan</span>
+            </div>
+            <button onclick="resetUI()" class="w-full py-2.5 px-4 bg-white/5 hover:bg-white/10 border border-white/5 text-sm text-white rounded-lg transition-all flex items-center justify-center gap-2 group">
+                <i class="fa-solid fa-plus text-indigo-400 group-hover:text-white transition-colors"></i> New Strategy
+            </button>
+        </div>
+        
+        <div class="px-6 pb-2 text-xs font-semibold text-slate-500 uppercase tracking-wider">History</div>
+        <div class="flex-1 overflow-y-auto px-4 space-y-1 pb-4" id="historyList">
+            </div>
+    </aside>
+
+    <main class="flex-1 overflow-y-auto relative flex flex-col items-center pt-16 px-4 md:px-0">
+        
+        <div id="hero" class="text-center max-w-2xl mx-auto transition-all duration-500">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-medium mb-6">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span>
+                </span>
+                AI-Powered Architect 2.0
+            </div>
+            <h1 class="text-5xl md:text-6xl font-extrabold text-white mb-6 tracking-tight glow-text">
+                Build your future, <br> <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400">step by step.</span>
+            </h1>
+            <p class="text-slate-400 text-lg mb-10 leading-relaxed max-w-lg mx-auto">
+                Enter any complex goal. Our AI will break it down into a concise, actionable roadmap instantly.
+            </p>
+        </div>
+
+        <div class="w-full max-w-2xl relative z-10">
+            <div class="glass p-1.5 rounded-2xl flex items-center shadow-2xl shadow-indigo-900/20 transition-all focus-within:ring-2 focus-within:ring-indigo-500/50">
+                <div class="pl-4 pr-3 text-indigo-400"><i class="fa-solid fa-sparkles"></i></div>
+                <input type="text" id="goalInput" placeholder="What do you want to achieve?" 
+                    class="flex-1 bg-transparent py-3 text-white placeholder-slate-500 focus:outline-none text-lg"
+                    onkeydown="if(event.key === 'Enter') handleMainInput()">
+                <button onclick="handleMainInput()" class="bg-indigo-600 hover:bg-indigo-500 text-white font-medium py-2.5 px-6 rounded-xl transition-all shadow-lg shadow-indigo-600/20">
+                    Plan
+                </button>
+            </div>
+        </div>
+
+        <div id="results" class="w-full max-w-3xl mt-12 mb-32 hidden">
+            <div class="flex items-center justify-between mb-8 px-2">
+                <div>
+                    <h2 id="planTitle" class="text-2xl font-bold text-white mb-1"></h2>
+                    <p class="text-sm text-slate-500">AI Generated Roadmap</p>
+                </div>
+                <button onclick="window.print()" class="text-slate-500 hover:text-white transition-colors"><i class="fa-solid fa-print"></i></button>
+            </div>
+
+            <div id="timeline" class="space-y-4">
+                </div>
+
+            <div class="fixed bottom-8 left-1/2 -translate-x-1/2 w-full max-w-xl px-4 z-50">
+                <div class="glass p-2 rounded-xl flex items-center shadow-2xl border border-indigo-500/30">
+                    <input type="text" id="refineInput" placeholder="Modify this plan (e.g., 'Make it 2 weeks', 'Add budget')" 
+                        class="flex-1 bg-transparent px-4 py-2 text-sm text-white focus:outline-none"
+                        onkeydown="if(event.key === 'Enter') refinePlan()">
+                    <button onclick="refinePlan()" class="text-xs bg-white/10 hover:bg-white/20 text-white px-3 py-2 rounded-lg transition-all">
+                        <i class="fa-solid fa-rotate"></i> Update
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="loading" class="hidden mt-12 flex flex-col items-center">
+            <div class="w-12 h-12 border-4 border-indigo-500/30 border-t-indigo-500 rounded-full animate-spin mb-4"></div>
+            <p class="text-slate-500 text-sm animate-pulse">Architecting your plan...</p>
+        </div>
+
+    </main>
+
+    <script>
+        let currentContext = ""; // Stores the current goal title for refinement context
+
+        document.addEventListener('DOMContentLoaded', loadHistory);
+
+        async function handleMainInput() {
+            const input = document.getElementById('goalInput');
+            if (!input.value) return;
+            generate(input.value, null);
+        }
+
+        async function refinePlan() {
+            const input = document.getElementById('refineInput');
+            if (!input.value) return;
+            // Send Modification Instruction + Original Context
+            generate(input.value, currentContext);
+            input.value = ''; // Clear refine box
+        }
+
+        async function generate(goalText, context) {
+            // UI States
+            const hero = document.getElementById('hero');
+            const loading = document.getElementById('loading');
+            const results = document.getElementById('results');
+            
+            hero.classList.add('hidden'); // Hide big title
+            results.classList.add('hidden');
+            loading.classList.remove('hidden');
+
+            try {
+                const payload = { goal_text: goalText, current_plan_context: context };
+                
+                const res = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!res.ok) throw new Error("API Error");
+                const data = await res.json();
+                
+                currentContext = data.goal; // Save for next refinement
+                renderPlan(data);
+                if (!context) loadHistory(); // Only refresh history on new plans
+
+            } catch (error) {
+                alert("Error generating plan.");
+                console.error(error);
+            } finally {
+                loading.classList.add('hidden');
+                results.classList.remove('hidden');
+            }
+        }
+
+        function renderPlan(data) {
+            document.getElementById('planTitle').innerText = data.goal;
+            const timeline = document.getElementById('timeline');
+            timeline.innerHTML = '';
+
+            data.tasks.forEach((task, index) => {
+                const delay = index * 100;
+                timeline.innerHTML += `
+                    <div class="glass-card p-5 rounded-xl border-l-4 border-indigo-500 animate-[fadeInUp_0.5s_ease-out_forwards]" style="animation-delay: ${delay}ms; opacity: 0">
+                        <div class="flex justify-between items-start mb-1">
+                            <h3 class="font-bold text-white text-lg">${task.title}</h3>
+                            <span class="text-xs font-mono text-indigo-300 bg-indigo-500/10 px-2 py-1 rounded border border-indigo-500/20">${task.duration}</span>
+                        </div>
+                        <p class="text-slate-400 text-sm leading-relaxed">${task.description}</p>
+                    </div>
+                `;
+            });
+        }
+
+        async function loadHistory() {
+            const list = document.getElementById('historyList');
+            try {
+                const res = await fetch('/api/history');
+                const plans = await res.json();
+                list.innerHTML = '';
+                plans.forEach(plan => {
+                    const item = document.createElement('div');
+                    item.className = 'px-4 py-3 rounded-lg hover:bg-white/5 cursor-pointer transition-all group';
+                    item.onclick = () => loadArchived(plan.id);
+                    item.innerHTML = `
+                        <div class="text-sm font-medium text-slate-300 group-hover:text-white truncate">${plan.goal}</div>
+                        <div class="text-[10px] text-slate-600 mt-1">${new Date(plan.date).toLocaleDateString()}</div>
+                    `;
+                    list.appendChild(item);
+                });
+            } catch(e) {}
+        }
+
+        async function loadArchived(id) {
+            document.getElementById('loading').classList.remove('hidden');
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('hero').classList.add('hidden');
+            
+            const res = await fetch(`/api/history/${id}`);
+            const data = await res.json();
+            
+            currentContext = data.goal;
+            renderPlan(data);
+            
+            document.getElementById('loading').classList.add('hidden');
+            document.getElementById('results').classList.remove('hidden');
+        }
+
+        function resetUI() {
+            document.getElementById('hero').classList.remove('hidden');
+            document.getElementById('results').classList.add('hidden');
+            document.getElementById('goalInput').value = '';
+            currentContext = "";
+        }
+    </script>
+</body>
+</html>
