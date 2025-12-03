@@ -1,4 +1,4 @@
-# 🚀 NexPlan AI - Advanced Goal Architect
+# 🚀 Smart_Task_Planner- Advanced Goal Architect
 
 ![Status](https://img.shields.io/badge/Status-Completed-success?style=flat-square)
 ![Stack](https://img.shields.io/badge/FastAPI-Tailwind-blue?style=flat-square)
@@ -64,6 +64,7 @@ pip install -r requirements.txt
 ### 4. Configure Environment Variables
 1. Create a file named `.env` in the root folder.
 2. Open it and add your Google Gemini API Key:
+To get key visit : https://aistudio.google.com/app/u/1/api-keys
 ```env
 GEMINI_API_KEY=your_actual_api_key_here
 ```
