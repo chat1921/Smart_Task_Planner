@@ -53,13 +53,13 @@ python -m venv venv
 venv\Scripts\activate
 
 Mac / Linux:
-Bash
+Bash:
 
     python3 -m venv venv
     source venv/bin/activate
 
 3. Install Dependencies
-Bash
+Bash:
 
 pip install -r requirements.txt
 
@@ -75,7 +75,7 @@ pip install -r requirements.txt
 5. Run the Application
 
 Start the backend server:
-Bash
+Bash:
 
 uvicorn app.main:app --reload
 
