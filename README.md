@@ -37,8 +37,7 @@ Follow these steps to run the project locally.
 Open your terminal and run:
 
 ```bash
-git clone [https://github.com/chat1921/Smart_Task_Planner.git](https://github.com/chat1921/Smart_Task_Planner.git)
-cd Smart_Task_Planner
+git clone https://github.com/chat1921/Smart_Task_Planner.git
 ```
 
 ### 2. Set up Virtual Environment
