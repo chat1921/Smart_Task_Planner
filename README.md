@@ -42,7 +42,7 @@ Open your terminal and run:
 git clone [https://github.com/chat1921/Smart_Task_Planner.git](https://github.com/chat1921/Smart_Task_Planner.git)
 cd Smart_Task_Planner
 
-2. Set up Virtual Environment
+### 2. Set up Virtual Environment
 
 It is recommended to use a virtual environment to keep dependencies clean.
 
